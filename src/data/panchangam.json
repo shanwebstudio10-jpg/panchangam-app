@@ -1,0 +1,26 @@
+{
+  "tithis": ["Prathama","Dwitiya","Tritiya","Chaturthi","Panchami","Shashti","Saptami","Ashtami","Navami","Dashami","Ekadashi","Dwadashi","Trayodashi","Chaturdashi"],
+  "pakshas": ["Krishna","Shukla"],
+  "nakshatras": ["Ashwini","Bharani","Krittika","Rohini","Mrigashira","Ardra","Punarvasu","Pushya","Ashlesha","Magha","Purva Phalguni","Uttara Phalguni","Hasta","Chitra","Swati","Vishakha","Anuradha","Jyeshtha","Mula","Purva Ashadha","Uttara Ashadha","Shravana","Dhanishta","Shatabhisha","Purva Bhadrapada","Uttara Bhadrapada","Revati"],
+  "yogas": ["Vishkumbha","Priti","Ayushman","Saubhagya","Shobhana","Atiganda","Sukarman","Dhriti","Shula","Ganda","Vridhi","Dhruva","Vyaghata","Harshana","Vajra","Siddhi","Vyatipata","Variyana","Paridha","Shiva","Siddha","Sadhya","Shubha","Shukla","Brahma","Indra","Vaidhriti"],
+  "karanas": ["Bava","Balava","Kaulava","Taitila","Gara","Vanija","Vishti","Shakuni","Chatushpada","Naga","Kimstughna"],
+  "masams": ["Chaitra","Vaishakha","Jyeshtha","Ashadha","Shravana","Bhadrapada","Ashwin","Kartik","Margashirsha","Pausha","Magha","Phalguna"],
+  "samvatsaras": ["Plava","Shubhakruthu","Shobhakruthu","Krodhi","Visvavasu","Parabhava","Plavanga","Kilaka","Saumya","Sadharana","Virodhikruthu","Praudhavruthu","Ananda","Rakshasa","Nala","Pingala","Kalayukthi","Siddharthi","Raudra","Durmathi","Dundubhi","Rudhirodgari","Raktaksha","Krodhana","Akshaya"],
+  "ritus": ["Shishira","Shishira","Vasanta","Vasanta","Grishma","Grishma","Varsha","Varsha","Sharad","Sharad","Hemanta","Hemanta"],
+  "rashis": [
+    {"name":"Mesha","symbol":"♈","english":"Aries","lord":"Mars","element":"Fire"},
+    {"name":"Vrishabha","symbol":"♉","english":"Taurus","lord":"Venus","element":"Earth"},
+    {"name":"Mithuna","symbol":"♊","english":"Gemini","lord":"Mercury","element":"Air"},
+    {"name":"Karka","symbol":"♋","english":"Cancer","lord":"Moon","element":"Water"},
+    {"name":"Simha","symbol":"♌","english":"Leo","lord":"Sun","element":"Fire"},
+    {"name":"Kanya","symbol":"♍","english":"Virgo","lord":"Mercury","element":"Earth"},
+    {"name":"Tula","symbol":"♎","english":"Libra","lord":"Venus","element":"Air"},
+    {"name":"Vrischika","symbol":"♏","english":"Scorpio","lord":"Mars","element":"Water"},
+    {"name":"Dhanu","symbol":"♐","english":"Sagittarius","lord":"Jupiter","element":"Fire"},
+    {"name":"Makara","symbol":"♑","english":"Capricorn","lord":"Saturn","element":"Earth"},
+    {"name":"Kumbha","symbol":"♒","english":"Aquarius","lord":"Saturn","element":"Air"},
+    {"name":"Meena","symbol":"♓","english":"Pisces","lord":"Jupiter","element":"Water"}
+  ],
+  "days": ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+  "daysHindi": ["Ravivaar","Somavaar","Mangalvaar","Budhvaar","Guruvaar","Shukravaar","Shanivaar"]
+}
