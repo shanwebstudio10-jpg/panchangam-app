@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router-dom'
-import FestivalList from '../components/FestivalList'
+import FestivalList from '../components/Festivallist'
 import festivals from '../data/festivals.json'
 
 export default function Festival() {

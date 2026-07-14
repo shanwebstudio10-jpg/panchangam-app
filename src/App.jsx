@@ -7,7 +7,7 @@ import Panchangam from './pages/Panchangam'
 import Festival from './pages/Festival'
 import Contact from './pages/Contact'
 import About from './pages/About'
-import ScrollToTop from './components/ScrollToTop'
+import ScrollToTop from './components/Scrolltotop'
 
 export default function App() {
   return (

@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import TodayPanchangam from '../components/TodayPanchangam'
+import TodayPanchangam from '../components/Todaypanchangam'
 import Muhurtham from '../components/Muhurtham'
-import RasiPalan from '../components/RasiPalan'
+import RasiPalan from '../components/Rasipalan'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 export default function Panchangam() {
