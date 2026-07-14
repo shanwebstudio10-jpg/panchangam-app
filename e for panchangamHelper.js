@@ -1,0 +1,13 @@
+[33mcommit 87c5b421f7899ceabb66a22fd877e20dc26909cf[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Shanmugam <shanmugam8489424109@gmail.com>
+Date:   Tue Jul 14 13:05:01 2026 +0530
+
+    fix: correct case for all page filenames
+
+ src/pages/{about.jsx => About.jsx}           | 0
+ src/pages/{calendar.jsx => Calendar.jsx}     | 0
+ src/pages/{contact.jsx => Contact.jsx}       | 0
+ src/pages/{festival.jsx => Festival.jsx}     | 0
+ src/pages/{home.jsx => Home.jsx}             | 0
+ src/pages/{panchangam.jsx => Panchangam.jsx} | 0
+ 6 files changed, 0 insertions(+), 0 deletions(-)
