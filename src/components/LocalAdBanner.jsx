@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useRef } from 'react'
-import { localAds } from '../data/LocalAds'
+import { localAds } from '../data/LocalAds.js'
 
 export default function LocalAdBanner({ rotateSeconds = 8, className = '' }) {
   const ads = useMemo(() => localAds.filter(ad => ad.active), [])
