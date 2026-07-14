@@ -13,7 +13,8 @@ export default {
       },
       fontFamily: {
         display: ['"Yatra One"', 'cursive'],
-        body: ['"Outfit"', 'sans-serif'],
+        body: ['"Noto Sans Tamil"', '"Outfit"', 'sans-serif'],
+        tamil: ['"Noto Sans Tamil"', '"Outfit"', 'sans-serif'],
       },
       animation: {
         'float': 'float 6s ease-in-out infinite',
