@@ -1,4 +1,4 @@
-import { useState, useEffect, useLocation } from 'react'
+import { useState, useEffect } from 'react'
 import { useLocation as useRouterLocation } from 'react-router-dom'
 import TodayPanchangam from '../components/Todaypanchangam'
 import CalendarView from '../components/Calendar'
