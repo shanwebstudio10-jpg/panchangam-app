@@ -2,21 +2,24 @@ import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Menu, X, Flame } from 'lucide-react'
 import ThemeToggle from './ThemeToggle'
+import LanguageToggle from './LanguageToggle'
 import SearchBox from './Searchbox'
-
-const navLinks = [
-  { to: '/', label: 'Home' },
-  { to: '/panchangam', label: 'Panchangam' },
-  { to: '/calendar', label: 'Calendar' },
-  { to: '/festivals', label: 'Festivals' },
-  { to: '/about', label: 'About' },
-  { to: '/contact', label: 'Contact' },
-]
+import { useLanguage } from '../context/LanguageContext'
 
 export default function Header() {
+  const { language, translate } = useLanguage()
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const { pathname } = useLocation()
+
+  const navLinks = [
+    { to: '/', label: translate('nav.home') },
+    { to: '/panchangam', label: translate('nav.panchangam') },
+    { to: '/calendar', label: translate('nav.calendar') },
+    { to: '/festivals', label: translate('nav.festivals') },
+    { to: '/about', label: translate('nav.about') },
+    { to: '/contact', label: translate('nav.contact') },
+  ]
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10)
@@ -96,7 +99,10 @@ export default function Header() {
                 <SearchBox />
               </div>
 
-              <div className="hidden sm:block w-px h-5 bg-zinc-800" />
+              <div className="hidden sm:flex items-center gap-3">
+                <LanguageToggle />
+                <div className="w-px h-5 bg-zinc-800" />
+              </div>
 
               <ThemeToggle />
 
