@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Calendar, Star, Clock, Sparkles, Flame } from 'lucide-react'
+import { useLanguage } from '../context/LanguageContext'
 import TodayPanchangam from '../components/Todaypanchangam'
 import CalendarView from '../components/Calendar'
 import FestivalList from '../components/Festivallist'
@@ -11,6 +12,7 @@ import festivals from '../data/festivals.json'
 import { getUpcomingFestivals, daysUntil, getPanchangamForDate } from '../utils/panchangamHelper'
 
 export default function Home() {
+  const { translate } = useLanguage()
   const [todayPanchangam, setTodayPanchangam] = useState(null)
   const upcoming = getUpcomingFestivals(festivals, 6)
 
@@ -41,13 +43,13 @@ export default function Home() {
           <div className="max-w-3xl">
             <div className="flex items-center gap-2 mb-4">
               <Flame size={20} className="text-saffron-300" />
-              <span className="text-saffron-200 text-sm font-medium tracking-wider uppercase">Shubhakruthu Samvatsara</span>
+              <span className="text-saffron-200 text-sm font-medium tracking-wider uppercase">{translate('home.heroTag')}</span>
             </div>
             <h1 className="font-display text-5xl md:text-7xl leading-tight mb-4">
-              పంచాంగం
+              பஞ்சாங்கம்
             </h1>
             <p className="text-xl md:text-2xl text-cream-100/80 font-light mb-2">
-              Your Daily Hindu Calendar &amp; Almanac
+              {translate('home.heroDesc')}
             </p>
             {todayPanchangam && (
               <p className="text-cream-100/50 text-sm md:text-base mb-8">
@@ -56,20 +58,20 @@ export default function Home() {
             )}
             <div className="flex flex-wrap gap-4">
               <Link to="/panchangam" className="inline-flex items-center gap-2 bg-white text-saffron-700 font-semibold px-6 py-3 rounded-xl hover:bg-cream-100 active:scale-95 transition-all shadow-xl shadow-black/20">
-                Today's Panchangam <ArrowRight size={18} />
+                {translate('home.todayPanchangam')} <ArrowRight size={18} />
               </Link>
               <Link to="/calendar" className="inline-flex items-center gap-2 border-2 border-white/30 text-white font-semibold px-6 py-3 rounded-xl hover:bg-white/10 active:scale-95 transition-all">
-                <Calendar size={18} /> View Calendar
+                <Calendar size={18} /> {translate('home.viewCalendar')}
               </Link>
             </div>
           </div>
 
           <div className="hidden lg:grid grid-cols-2 gap-4 absolute right-6 top-1/2 -translate-y-1/2">
             {[
-              { icon: Star, label: 'Nakshatra', value: todayPanchangam?.nakshatra || '—' },
-              { icon: Clock, label: 'Rahu Kalam', value: todayPanchangam?.rahukalam || '—' },
-              { icon: Sparkles, label: 'Yoga', value: todayPanchangam?.yoga || '—' },
-              { icon: Calendar, label: 'Ayanam', value: todayPanchangam?.ayanam || '—' },
+              { icon: Star, label: translate('panchangamElements.nakshatra'), value: todayPanchangam?.nakshatra || '—' },
+              { icon: Clock, label: translate('panchangamElements.rahukalam'), value: todayPanchangam?.rahukalam || '—' },
+              { icon: Sparkles, label: translate('panchangamElements.yoga'), value: todayPanchangam?.yoga || '—' },
+              { icon: Calendar, label: translate('panchangamElements.ayanam'), value: todayPanchangam?.ayanam || '—' },
             ].map((stat, i) => (
               <div key={i} className="bg-white/10 backdrop-blur-sm border border-white/10 rounded-xl p-4 hover:bg-white/15 transition-all">
                 <stat.icon size={18} className="text-saffron-300 mb-2" />
@@ -101,11 +103,11 @@ export default function Home() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 mt-16">
         <div className="flex items-end justify-between mb-8">
           <div>
-            <h2 className="section-title">Upcoming Festivals</h2>
-            <p className="section-subtitle">Important dates to remember</p>
+            <h2 className="section-title">{translate('home.upcomingFestivals')}</h2>
+            <p className="section-subtitle">{translate('home.upcomingCopy')}</p>
           </div>
           <Link to="/festivals" className="hidden sm:flex items-center gap-2 text-saffron-500 hover:text-saffron-600 font-semibold text-sm transition-colors">
-            View All <ArrowRight size={16} />
+            {translate('home.viewAll')} <ArrowRight size={16} />
           </Link>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -128,7 +130,7 @@ export default function Home() {
                 <p className="text-sm text-bark-50/50 dark:text-cream-100/30 line-clamp-2">{f.description}</p>
                 <div className="mt-3 pt-3 border-t border-saffron-100 dark:border-bark-50/20">
                   <span className={`badge-${f.category === 'newyear' ? 'newyear' : f.category}`}>
-                    {f.category}
+                    {translate(`categories.${f.category}`)}
                   </span>
                 </div>
               </Link>
@@ -136,7 +138,7 @@ export default function Home() {
           })}
         </div>
         <Link to="/festivals" className="sm:hidden flex items-center justify-center gap-2 text-saffron-500 font-semibold text-sm mt-6">
-          View All Festivals <ArrowRight size={16} />
+          {translate('home.viewAll')} Festivals <ArrowRight size={16} />
         </Link>
       </section>
 
@@ -144,8 +146,8 @@ export default function Home() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 mt-16">
         <div className="flex items-end justify-between mb-8">
           <div>
-            <h2 className="section-title">Rasi Palan</h2>
-            <p className="section-subtitle">Daily zodiac predictions for all 12 rashis</p>
+            <h2 className="section-title">{translate('home.rasiPalan')}</h2>
+            <p className="section-subtitle">{translate('home.rasiPalanCopy')}</p>
           </div>
           <Link to="/panchangam" className="hidden sm:flex items-center gap-2 text-saffron-500 hover:text-saffron-600 font-semibold text-sm transition-colors">
             Full Details <ArrowRight size={16} />
@@ -156,20 +158,16 @@ export default function Home() {
 
       {/* ====== QUICK LINKS ====== */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 mt-16">
+        <h2 className="section-title mb-8">{translate('home.quickLinksTitle')}</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {[
-            { to: '/panchangam', icon: Sparkles, title: 'Full Panchangam', desc: 'Detailed daily Panchangam with all elements' },
-            { to: '/calendar', icon: Calendar, title: 'Hindu Calendar', desc: 'Monthly calendar with Tithi and Nakshatra' },
-            { to: '/festivals', icon: Star, title: 'Festival Guide', desc: 'Complete list of festivals and celebrations' },
-            { to: '/contact', icon: Flame, title: 'Contact Us', desc: 'Questions, feedback, or custom Panchangam' },
-          ].map(link => (
-            <Link key={link.to} to={link.to} className="card p-6 hover:-translate-y-1 transition-all group text-center">
+          {translate('home.quickLinks').map((link, i) => (
+            <a key={i} href="/" className="card p-6 hover:-translate-y-1 transition-all group text-center">
               <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-saffron-100 to-saffron-200 dark:from-saffron-900/30 dark:to-saffron-800/20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                <link.icon size={24} className="text-saffron-500" />
+                <Sparkles size={24} className="text-saffron-500" />
               </div>
               <h3 className="font-bold text-bark-300 dark:text-cream-100 group-hover:text-saffron-500 dark:group-hover:text-saffron-400 transition-colors">{link.title}</h3>
               <p className="text-sm text-bark-50/50 dark:text-cream-100/30 mt-1">{link.desc}</p>
-            </Link>
+            </a>
           ))}
         </div>
       </section>
