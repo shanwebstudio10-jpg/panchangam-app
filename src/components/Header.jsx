@@ -62,7 +62,7 @@ export default function Header() {
 
               <div className="leading-none select-none">
                 <span className="font-display text-lg text-zinc-100 tracking-tight block">
-                  పంచాంగం
+                  பஞ்சாங்கம்
                 </span>
                 <span className="font-mono text-[9px] text-zinc-600 tracking-[0.2em] uppercase mt-0.5 block">
                   Panchangam
