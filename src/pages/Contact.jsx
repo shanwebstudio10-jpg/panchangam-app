@@ -81,6 +81,13 @@ export default function Contact() {
             </div>
           ))}
 
+          <div className="card p-5 border border-saffron-200/70 dark:border-saffron-800/40 bg-gradient-to-br from-saffron-50 to-cream-200 dark:from-saffron-900/20 dark:to-bark-200">
+            <p className="text-[10px] uppercase tracking-[0.2em] text-saffron-600 dark:text-saffron-400 font-semibold mb-3">Contact Person</p>
+            <p className="font-semibold text-bark-300 dark:text-cream-100">Name: Shanmugam</p>
+            <p className="text-sm text-saffron-600 dark:text-saffron-400 mt-1">Phone: 8489424109</p>
+            <p className="text-sm text-saffron-600 dark:text-saffron-400 mt-1">Email: shanwebstudio10@gmail.com</p>
+          </div>
+
           <div className="card p-5 bg-gradient-to-br from-saffron-50 to-cream-200 dark:from-saffron-900/20 dark:to-bark-200">
             <h3 className="font-bold text-bark-300 dark:text-cream-100 mb-2">{translate('contact.customTitle')}</h3>
             <p className="text-sm text-bark-50/60 dark:text-cream-100/40 leading-relaxed">
