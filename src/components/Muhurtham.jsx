@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Clock, CheckCircle, AlertCircle, MinusCircle, Info } from 'lucide-react'
 import { getMuhurthamForDate, formatDate } from '../utils/panchangamHelper'
+import { useLanguage } from '../context/LanguageContext'
 
 const qualityIcons = {
   Excellent: CheckCircle,
@@ -17,6 +18,7 @@ const qualityColors = {
 }
 
 export default function Muhurtham({ date }) {
+  const { translate } = useLanguage()
   const [muhurtham, setMuhurtham] = useState([])
   const [expanded, setExpanded] = useState(null)
   const targetDate = useMemo(() => date || new Date(), [date])
@@ -33,12 +35,12 @@ export default function Muhurtham({ date }) {
           <Clock size={20} className="text-white" />
         </div>
         <div>
-          <h2 className="text-xl font-bold text-bark-300 dark:text-cream-100">Muhurtham Finder</h2>
+          <h2 className="text-xl font-bold text-bark-300 dark:text-cream-100">{translate('muhurtham.title')}</h2>
           <p className="text-sm text-bark-50/60 dark:text-cream-100/40">{formatDate(targetDate)}</p>
         </div>
       </div>
       <p className="text-sm text-bark-50/50 dark:text-cream-100/30 mb-6">
-        Auspicious times for various activities based on weekday, Tithi, Nakshatra, and Yoga.
+        {translate('muhurtham.desc')}
       </p>
 
       <div className="space-y-3">
@@ -60,7 +62,7 @@ export default function Muhurtham({ date }) {
                     <p className="text-sm text-bark-50/60 dark:text-cream-100/40">{item.time}</p>
                   </div>
                 </div>
-                <span className={`badge ${colors.badge}`}>{item.quality}</span>
+                <span className={`badge ${colors.badge}`}>{translate(`muhurtham.${item.quality.toLowerCase()}`)}</span>
               </button>
               {isOpen && (
                 <div className="px-4 pb-4 pt-0 animate-slide-up">

@@ -1,8 +1,10 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Sun, Moon, Sunrise, Sunset, Clock, Star, Sparkles, AlertTriangle } from 'lucide-react'
 import { getPanchangamForDate, formatDate } from '../utils/panchangamHelper'
+import { useLanguage } from '../context/LanguageContext'
 
 export default function TodayPanchangam({ date }) {
+  const { translate } = useLanguage()
   const [panchangam, setPanchangam] = useState(null)
   const targetDate = useMemo(() => date || new Date(), [date])
 
@@ -13,18 +15,18 @@ export default function TodayPanchangam({ date }) {
   if (!panchangam) return null
 
   const items = [
-    { icon: Sunrise, label: 'Sunrise', value: panchangam.sunrise, color: 'text-amber-500' },
-    { icon: Sunset, label: 'Sunset', value: panchangam.sunset, color: 'text-orange-500' },
-    { icon: Moon, label: 'Tithi', value: panchangam.tithi, color: 'text-indigo-500' },
-    { icon: Star, label: 'Nakshatra', value: panchangam.nakshatra, color: 'text-purple-500' },
-    { icon: Sparkles, label: 'Yoga', value: panchangam.yoga, color: 'text-emerald-500' },
-    { icon: Clock, label: 'Karana', value: panchangam.karana, color: 'text-blue-500' },
+    { icon: Sunrise, label: translate('panchangamElements.sunrise'), value: panchangam.sunrise, color: 'text-amber-500' },
+    { icon: Sunset, label: translate('panchangamElements.sunset'), value: panchangam.sunset, color: 'text-orange-500' },
+    { icon: Moon, label: translate('panchangamElements.tithi'), value: panchangam.tithi, color: 'text-indigo-500' },
+    { icon: Star, label: translate('panchangamElements.nakshatra'), value: panchangam.nakshatra, color: 'text-purple-500' },
+    { icon: Sparkles, label: translate('panchangamElements.yoga'), value: panchangam.yoga, color: 'text-emerald-500' },
+    { icon: Clock, label: translate('panchangamElements.karana'), value: panchangam.karana, color: 'text-blue-500' },
   ]
 
   const inauspicious = [
-    { icon: AlertTriangle, label: 'Rahu Kalam', value: panchangam.rahukalam, color: 'text-red-500' },
-    { icon: AlertTriangle, label: 'Yamagandam', value: panchangam.yamagandam, color: 'text-red-400' },
-    { icon: AlertTriangle, label: 'Gulikai', value: panchangam.gulikai, color: 'text-orange-400' },
+    { icon: AlertTriangle, label: translate('panchangamElements.rahukalam'), value: panchangam.rahukalam, color: 'text-red-500' },
+    { icon: AlertTriangle, label: translate('panchangamElements.yamagandam'), value: panchangam.yamagandam, color: 'text-red-400' },
+    { icon: AlertTriangle, label: translate('panchangamElements.gulikai'), value: panchangam.gulikai, color: 'text-orange-400' },
   ]
 
   return (
@@ -32,12 +34,12 @@ export default function TodayPanchangam({ date }) {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-6">
         <div>
-          <h2 className="text-xl font-bold text-bark-300 dark:text-cream-100">Today's Panchangam</h2>
+          <h2 className="text-xl font-bold text-bark-300 dark:text-cream-100">{translate('home.todayPanchangam')}</h2>
           <p className="text-sm text-bark-50/60 dark:text-cream-100/40 mt-0.5">{formatDate(targetDate)}</p>
         </div>
         <div className="flex items-center gap-2">
           <span className={`badge ${panchangam.isPurnima ? 'badge-festival' : panchangam.isAmavasya ? 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300' : 'badge-spiritual'}`}>
-            {panchangam.isPurnima ? 'Purnima' : panchangam.isAmavasya ? 'Amavasya' : panchangam.isEkadashi ? 'Ekadashi' : panchangam.masam}
+            {panchangam.isPurnima ? translate('panchangamElements.purnima') : panchangam.isAmavasya ? translate('panchangamElements.amavasya') : panchangam.isEkadashi ? translate('panchangamElements.ekadashi') : panchangam.masam}
           </span>
           <span className="badge bg-saffron-100 dark:bg-saffron-900/30 text-saffron-700 dark:text-saffron-300">
             {panchangam.ayanam}
@@ -61,10 +63,10 @@ export default function TodayPanchangam({ date }) {
       {/* Extra Info Row */}
       <div className="flex flex-wrap gap-3 mb-6 text-xs">
         {[
-          { label: 'Samvatsara', value: panchangam.samvatsara },
-          { label: 'Ritu', value: panchangam.ritu },
-          { label: 'Rashi', value: `${panchangam.rashi.symbol} ${panchangam.rashi.name}` },
-          { label: 'Day', value: panchangam.dayHindi },
+          { label: translate('panchangamElements.samvatsara'), value: panchangam.samvatsara },
+          { label: translate('panchangamElements.ritu'), value: panchangam.ritu },
+          { label: translate('panchangamElements.rashi'), value: `${panchangam.rashi.symbol} ${panchangam.rashi.name}` },
+          { label: translate('panchangamElements.day'), value: panchangam.dayHindi },
         ].map(info => (
           <span key={info.label} className="px-3 py-1.5 rounded-lg bg-white dark:bg-bark-100 border border-saffron-100 dark:border-bark-50/20">
             <span className="text-bark-50/50 dark:text-cream-100/30">{info.label}: </span>
@@ -76,7 +78,7 @@ export default function TodayPanchangam({ date }) {
       {/* Inauspicious Times */}
       <div>
         <h3 className="text-sm font-semibold text-red-600 dark:text-red-400 mb-3 uppercase tracking-wider flex items-center gap-2">
-          <AlertTriangle size={14} /> Inauspicious Times
+          <AlertTriangle size={14} /> {translate('panchangamElements.inauspiciousTimes')}
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {inauspicious.map(item => (

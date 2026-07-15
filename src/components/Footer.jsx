@@ -1,36 +1,38 @@
 import { Link } from 'react-router-dom'
 import { Flame, ArrowUpRight, Mail, MapPin } from 'lucide-react'
-
-const footerNav = {
-  panchangam: [
-    { to: '/panchangam', label: 'Daily Panchangam' },
-    { to: '/calendar', label: 'Hindu Calendar' },
-    { to: '/festivals', label: 'Festivals & Vrats' },
-    { to: '/muhurtham', label: 'Muhurtham' },
-  ],
-  resources: [
-    { to: '/tithi', label: 'Tithi Calculator' },
-    { to: '/nakshatra', label: 'Nakshatra Finder' },
-    { to: '/yoga', label: 'Yoga Calculator' },
-    { to: '/karanam', label: 'Karanam' },
-  ],
-  company: [
-    { to: '/about', label: 'About Us' },
-    { to: '/contact', label: 'Contact' },
-    { to: '/privacy', label: 'Privacy Policy' },
-    { to: '/disclaimer', label: 'Disclaimer' },
-  ],
-}
-
-const socialLinks = [
-  { label: 'Twitter', href: '#' },
-  { label: 'Instagram', href: '#' },
-  { label: 'YouTube', href: '#' },
-  { label: 'Telegram', href: '#' },
-]
+import { useLanguage } from '../context/LanguageContext'
 
 export default function Footer() {
+  const { translate } = useLanguage()
   const currentYear = new Date().getFullYear()
+
+  const footerNav = {
+    panchangam: [
+      { to: '/panchangam', label: translate('footer.sections.dailyPanchangam') },
+      { to: '/calendar', label: translate('footer.sections.hinduCalendar') },
+      { to: '/festivals', label: translate('footer.sections.festivalsVrats') },
+      { to: '/muhurtham', label: translate('footer.sections.muhurtham') },
+    ],
+    resources: [
+      { to: '/tithi', label: translate('footer.sections.tithiCalculator') },
+      { to: '/nakshatra', label: translate('footer.sections.nakshatraFinder') },
+      { to: '/yoga', label: translate('footer.sections.yogaCalculator') },
+      { to: '/karanam', label: translate('footer.sections.karanam') },
+    ],
+    company: [
+      { to: '/about', label: translate('footer.sections.aboutUs') },
+      { to: '/contact', label: translate('footer.sections.contact') },
+      { to: '/privacy', label: translate('footer.sections.privacyPolicy') },
+      { to: '/disclaimer', label: translate('footer.sections.disclaimer') },
+    ],
+  }
+
+  const socialLinks = [
+    { label: translate('footer.sections.social.twitter'), href: '#' },
+    { label: translate('footer.sections.social.instagram'), href: '#' },
+    { label: translate('footer.sections.social.youtube'), href: '#' },
+    { label: translate('footer.sections.social.telegram'), href: '#' },
+  ]
 
   return (
     <footer className="relative bg-zinc-950 border-t border-zinc-800/60">
@@ -57,9 +59,7 @@ export default function Footer() {
             </Link>
 
             <p className="text-sm text-zinc-500 leading-relaxed max-w-xs">
-              Accurate Hindu calendar and Panchangam data based on
-              Vedic astronomy. Trusted by millions for daily tithi,
-              nakshatra, yoga, and muhurtham calculations.
+              {translate('footer.description')}
             </p>
 
             {/* Contact info */}
@@ -82,7 +82,7 @@ export default function Footer() {
           {Object.entries(footerNav).map(([heading, links]) => (
             <div key={heading} className="lg:col-span-2">
               <h3 className="font-mono text-[10px] font-bold text-zinc-500 tracking-[0.2em] uppercase mb-5">
-                {heading}
+                {translate(`footer.sections.${heading}`)}
               </h3>
               <ul className="space-y-3">
                 {links.map(({ to, label }) => (
@@ -108,7 +108,7 @@ export default function Footer() {
           {/* ── Newsletter / CTA Column ── */}
           <div className="lg:col-span-2">
             <h3 className="font-mono text-[10px] font-bold text-zinc-500 tracking-[0.2em] uppercase mb-5">
-              Stay Updated
+              {translate('footer.stayUpdated')}
             </h3>
             <div className="space-y-4">
               <p className="text-[13px] text-zinc-600 leading-relaxed">
@@ -140,7 +140,7 @@ export default function Footer() {
                     transition-all duration-300
                   "
                 >
-                  Subscribe
+                  {translate('footer.subscribe')}
                 </button>
               </form>
 
@@ -174,7 +174,7 @@ export default function Footer() {
         {/* ── Bottom Bar ── */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-6">
           <p className="font-mono text-[10px] text-zinc-700 tracking-[0.15em] uppercase">
-            © {currentYear} Panchangam. All rights reserved.
+            {translate('footer.allRights', { year: currentYear })}
           </p>
 
           <div className="flex items-center gap-4">
@@ -182,21 +182,21 @@ export default function Footer() {
               to="/privacy"
               className="font-mono text-[10px] text-zinc-700 tracking-wider uppercase hover:text-zinc-400 transition-colors duration-300"
             >
-              Privacy
+              {translate('footer.privacy')}
             </Link>
             <span className="text-zinc-800">·</span>
             <Link
               to="/terms"
               className="font-mono text-[10px] text-zinc-700 tracking-wider uppercase hover:text-zinc-400 transition-colors duration-300"
             >
-              Terms
+              {translate('footer.terms')}
             </Link>
             <span className="text-zinc-800">·</span>
             <Link
               to="/disclaimer"
               className="font-mono text-[10px] text-zinc-700 tracking-wider uppercase hover:text-zinc-400 transition-colors duration-300"
             >
-              Disclaimer
+              {translate('footer.disclaimer')}
             </Link>
           </div>
 
