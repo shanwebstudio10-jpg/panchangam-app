@@ -1,11 +1,14 @@
 import { Flame, Star, Calendar, Clock, BookOpen, Users } from 'lucide-react'
+import { useLanguage } from '../context/LanguageContext'
 
 export default function About() {
+  const { translate } = useLanguage()
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 animate-fade-in">
       <div className="mb-8">
-        <h1 className="section-title">About Panchangam</h1>
-        <p className="section-subtitle">Understanding the Hindu system of timekeeping</p>
+        <h1 className="section-title">{translate('about.title')}</h1>
+        <p className="section-subtitle">{translate('about.subtitle')}</p>
       </div>
 
       {/* Hero Card */}
