@@ -8,6 +8,9 @@ import Panchangam from './pages/Panchangam.jsx'
 import Festival from './pages/Festival.jsx'
 import Contact from './pages/Contact.jsx'
 import About from './pages/About'
+import RahuKalamPage from './pages/RahuKalam.jsx'
+import MuhurthamPage from './pages/Muhurtham.jsx'
+import RasiPalanPage from './pages/RasiPalan.jsx'
 import ScrollToTop from './components/Scrolltotop'
 import { trackPageView } from './utils/googleAnalytics'
 
@@ -30,6 +33,11 @@ export default function App() {
           <Route path="/festivals" element={<Festival />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<About />} />
+          <Route path="/rahukalam" element={<RahuKalamPage />} />
+          <Route path="/ragu-kalam" element={<RahuKalamPage />} />
+          <Route path="/muhurtham" element={<MuhurthamPage />} />
+          <Route path="/rasipalan" element={<RasiPalanPage />} />
+          <Route path="/rasi-palan" element={<RasiPalanPage />} />
         </Routes>
       </main>
       <Footer />
