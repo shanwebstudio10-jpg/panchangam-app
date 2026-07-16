@@ -1,30 +1,28 @@
-import ReactGA from 'react-ga4'
+export const trackEvent = (eventName, params = {}) => {
+  if (typeof window.gtag === 'function') {
+    window.gtag('event', eventName, params);
+  } else {
+    console.warn('G-6R3WJZRNL7:', eventName, params);
+  }
+};
 
-// Initialize Google Analytics
-export const initializeGoogleAnalytics = () => {
-  // Replace with your Google Measurement ID
-  const measurementId = 'G-XXXXXXXXXX' // Example: G-1234567890
-  
-  ReactGA.initialize(measurementId)
-}
+// Common events for panchangam app
+export const trackPageView = (pageType, date) => {
+  trackEvent('panchangam_view', {
+    page_type: pageType,
+    selected_date: date,
+  });
+};
 
-// Track page views
-export const trackPageView = (pagePath) => {
-  ReactGA.send({
-    hitType: 'pageview',
-    page: pagePath,
-  })
-}
+export const trackAdClick = (businessName, placement = 'banner') => {
+  trackEvent('ad_click', {
+    business_name: businessName,
+    ad_placement: placement,
+  });
+};
 
-// Track events
-export const trackEvent = (eventName, eventData = {}) => {
-  ReactGA.event(eventName, eventData)
-}
-
-// Track user actions
-export const trackUserAction = (category, action, label = '') => {
-  ReactGA.gtag.event(action, {
-    event_category: category,
-    event_label: label,
-  })
-}
+export const trackDateChange = (newDate) => {
+  trackEvent('date_selected', {
+    selected_date: newDate,
+  });
+};
