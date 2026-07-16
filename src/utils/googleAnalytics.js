@@ -26,3 +26,9 @@ export const trackDateChange = (newDate) => {
     selected_date: newDate,
   });
 };
+
+export const initializeGoogleAnalytics = () => {
+  if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+    console.log('GA4 already initialized via index.html');
+  }
+};
