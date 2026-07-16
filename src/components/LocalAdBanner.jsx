@@ -1,21 +1,59 @@
-"use client";
-
 import { useState, useEffect, useCallback, useRef } from "react";
-import { localAds } from "./localAds";
 import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
 
-// Filter only active ads
+const localAds = [
+  {
+    id: 1,
+    name: "shanwebstudio",
+    image: "/images/ads/shanwebstudio.png",
+    link: "https://wa.me/918489424109",
+    alt: "Shan Web Studio - Website Design, Branding, Web Development",
+    active: true,
+  },
+  {
+    id: 2,
+    name: "trendytailors",
+    image: "/images/ads/trendytailors.png",
+    link: "https://wa.me/919876543210",
+    alt: "Trendy Tailors - Custom Stitching, Alterations, Bridal Wear",
+    active: true,
+  },
+  {
+    id: 3,
+    name: "spicehouse",
+    image: "/images/ads/spicehouse.png",
+    link: "https://wa.me/919998887776",
+    alt: "Spice House - Premium Spices, Masala Products, Wholesale",
+    active: true,
+  },
+  {
+    id: 4,
+    name: "quickfixelectronics",
+    image: "/images/ads/quickfixelectronics.png",
+    link: "https://wa.me/919123456789",
+    alt: "Quick Fix Electronics - AC Service, TV Repair, Home Appliances",
+    active: true,
+  },
+  {
+    id: 5,
+    name: "greenleafcafe",
+    image: "/images/ads/greenleafcafe.png",
+    link: "https://wa.me/918765432100",
+    alt: "Green Leaf Cafe - Fresh Juices, Healthy Meals, Snacks",
+    active: false,
+  },
+];
+
 const activeAds = localAds.filter((ad) => ad.active);
 
 export default function LocalAdBanner() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [slideDirection, setSlideDirection] = useState("next");
-  const [animState, setAnimState] = useState("idle"); // idle | entering | exiting
+  const [animState, setAnimState] = useState("idle");
   const timerRef = useRef(null);
   const SLIDE_INTERVAL = 5000;
 
-  // Reset to valid index if ads get deactivated
   useEffect(() => {
     if (currentIndex >= activeAds.length) {
       setCurrentIndex(0);
@@ -25,17 +63,12 @@ export default function LocalAdBanner() {
   const goToSlide = useCallback(
     (index, direction = "next") => {
       if (activeAds.length <= 1 || index === currentIndex) return;
-
       setSlideDirection(direction);
       setAnimState("exiting");
-
       setTimeout(() => {
         setCurrentIndex(index);
         setAnimState("entering");
-
-        setTimeout(() => {
-          setAnimState("idle");
-        }, 400);
+        setTimeout(() => setAnimState("idle"), 400);
       }, 350);
     },
     [currentIndex, activeAds.length]
@@ -51,15 +84,12 @@ export default function LocalAdBanner() {
     goToSlide(prev, "prev");
   }, [currentIndex, goToSlide]);
 
-  // Auto-slide
   useEffect(() => {
     if (isPaused || activeAds.length <= 1) return;
-
     timerRef.current = setInterval(goNext, SLIDE_INTERVAL);
     return () => clearInterval(timerRef.current);
   }, [isPaused, goNext, activeAds.length]);
 
-  // Keyboard navigation
   useEffect(() => {
     const handleKey = (e) => {
       if (e.key === "ArrowLeft") goPrev();
@@ -69,7 +99,6 @@ export default function LocalAdBanner() {
     return () => window.removeEventListener("keydown", handleKey);
   }, [goNext, goPrev]);
 
-  // Animation classes
   const getAnimClass = () => {
     if (animState === "exiting") {
       return slideDirection === "next"
@@ -77,14 +106,11 @@ export default function LocalAdBanner() {
         : "opacity-0 translate-x-8 scale-[0.98]";
     }
     if (animState === "entering") {
-      return slideDirection === "next"
-        ? "opacity-100 translate-x-0 scale-100"
-        : "opacity-100 translate-x-0 scale-100";
+      return "opacity-100 translate-x-0 scale-100";
     }
     return "opacity-100 translate-x-0 scale-100";
   };
 
-  // Don't render if no active ads
   if (activeAds.length === 0) return null;
 
   const currentAd = activeAds[currentIndex];
@@ -95,7 +121,7 @@ export default function LocalAdBanner() {
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      {/* Banner Label */}
+      {/* Sponsored Label */}
       <div className="flex items-center gap-2 mb-3">
         <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/5 border border-white/10">
           <span className="w-1.5 h-1.5 rounded-full bg-brand-500 animate-pulse" />
@@ -110,9 +136,8 @@ export default function LocalAdBanner() {
         )}
       </div>
 
-      {/* Ad Container */}
+      {/* Ad Card */}
       <div className="relative group rounded-2xl overflow-hidden bg-white/[0.03] border border-white/[0.08]">
-        {/* Ad Image / Link */}
         <a
           href={currentAd.link}
           target="_blank"
@@ -121,10 +146,7 @@ export default function LocalAdBanner() {
           aria-label={currentAd.alt}
         >
           <div
-            className={`
-              transition-all duration-350 ease-out
-              ${getAnimClass()}
-            `}
+            className={`transition-all duration-350 ease-out ${getAnimClass()}`}
           >
             <img
               src={currentAd.image}
@@ -135,10 +157,10 @@ export default function LocalAdBanner() {
           </div>
         </a>
 
-        {/* Overlay Gradient (bottom) */}
+        {/* Bottom Gradient */}
         <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/50 to-transparent pointer-events-none" />
 
-        {/* External Link Indicator */}
+        {/* Visit Badge */}
         <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <span className="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-black/60 backdrop-blur-sm border border-white/10 text-xs text-white/80">
             <ExternalLink size={12} />
@@ -146,7 +168,7 @@ export default function LocalAdBanner() {
           </span>
         </div>
 
-        {/* Pause Indicator */}
+        {/* Paused Badge */}
         {isPaused && activeAds.length > 1 && (
           <div className="absolute top-3 left-3">
             <span className="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-black/60 backdrop-blur-sm border border-white/10 text-xs text-white/60">
@@ -156,7 +178,7 @@ export default function LocalAdBanner() {
           </div>
         )}
 
-        {/* Arrow Buttons — only if multiple ads */}
+        {/* Arrow Buttons */}
         {activeAds.length > 1 && (
           <>
             <button
@@ -201,7 +223,7 @@ export default function LocalAdBanner() {
         </div>
       )}
 
-      {/* Ad Name Tag */}
+      {/* Ad Name */}
       <p className="text-center text-xs text-slate-500 mt-3 truncate">
         {currentAd.name}
       </p>
