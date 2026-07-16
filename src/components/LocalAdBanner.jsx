@@ -1,97 +1,210 @@
-import { useState, useEffect, useMemo, useRef } from 'react'
-import { localAds } from '../data/localAds.js'
+"use client";
 
-export default function LocalAdBanner({ rotateSeconds = 8, className = '' }) {
-  const ads = useMemo(() => localAds.filter(ad => ad.active), [])
-  const [index, setIndex] = useState(0)
-  const [animating, setAnimating] = useState(false)
-  const videoRef = useRef(null)
+import { useState, useEffect, useCallback, useRef } from "react";
+import { localAds } from "./localAds";
+import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
 
-  const ad = ads[index]
-  const isVideo = ad?.type === 'video'
+// Filter only active ads
+const activeAds = localAds.filter((ad) => ad.active);
 
-  const goToNext = () => {
-    setAnimating(true)
-    setTimeout(() => {
-      setIndex(prev => (prev + 1) % ads.length)
-      setAnimating(false)
-    }, 400)
-  }
+export default function LocalAdBanner() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [slideDirection, setSlideDirection] = useState("next");
+  const [animState, setAnimState] = useState("idle"); // idle | entering | exiting
+  const timerRef = useRef(null);
+  const SLIDE_INTERVAL = 5000;
 
+  // Reset to valid index if ads get deactivated
   useEffect(() => {
-    if (ads.length <= 1 || isVideo) return
-    const timer = setInterval(goToNext, rotateSeconds * 1000)
-    return () => clearInterval(timer)
-  }, [ads.length, rotateSeconds, index, isVideo])
-
-  if (!ads.length) return null
-
-  const handleClick = () => {
-    if (typeof window !== 'undefined' && window.gtag) {
-      window.gtag('event', 'ad_click', { ad_name: ad.name, ad_id: ad.id })
+    if (currentIndex >= activeAds.length) {
+      setCurrentIndex(0);
     }
-  }
+  }, [activeAds.length, currentIndex]);
 
-  const handleVideoEnded = () => {
-    if (ads.length > 1) goToNext()
-  }
+  const goToSlide = useCallback(
+    (index, direction = "next") => {
+      if (activeAds.length <= 1 || index === currentIndex) return;
+
+      setSlideDirection(direction);
+      setAnimState("exiting");
+
+      setTimeout(() => {
+        setCurrentIndex(index);
+        setAnimState("entering");
+
+        setTimeout(() => {
+          setAnimState("idle");
+        }, 400);
+      }, 350);
+    },
+    [currentIndex, activeAds.length]
+  );
+
+  const goNext = useCallback(() => {
+    const next = (currentIndex + 1) % activeAds.length;
+    goToSlide(next, "next");
+  }, [currentIndex, goToSlide]);
+
+  const goPrev = useCallback(() => {
+    const prev = (currentIndex - 1 + activeAds.length) % activeAds.length;
+    goToSlide(prev, "prev");
+  }, [currentIndex, goToSlide]);
+
+  // Auto-slide
+  useEffect(() => {
+    if (isPaused || activeAds.length <= 1) return;
+
+    timerRef.current = setInterval(goNext, SLIDE_INTERVAL);
+    return () => clearInterval(timerRef.current);
+  }, [isPaused, goNext, activeAds.length]);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKey = (e) => {
+      if (e.key === "ArrowLeft") goPrev();
+      if (e.key === "ArrowRight") goNext();
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [goNext, goPrev]);
+
+  // Animation classes
+  const getAnimClass = () => {
+    if (animState === "exiting") {
+      return slideDirection === "next"
+        ? "opacity-0 -translate-x-8 scale-[0.98]"
+        : "opacity-0 translate-x-8 scale-[0.98]";
+    }
+    if (animState === "entering") {
+      return slideDirection === "next"
+        ? "opacity-100 translate-x-0 scale-100"
+        : "opacity-100 translate-x-0 scale-100";
+    }
+    return "opacity-100 translate-x-0 scale-100";
+  };
+
+  // Don't render if no active ads
+  if (activeAds.length === 0) return null;
+
+  const currentAd = activeAds[currentIndex];
 
   return (
-    <div className={`my-4 text-center ${className}`}>
-      <a
-        href={ad.link}
-        target="_blank"
-        rel="noopener sponsored"
-        title={ad.name}
-        onClick={handleClick}
-        className="inline-block w-full max-w-[728px] overflow-hidden rounded-xl"
-      >
-        <div
-          className={`transition-all duration-400 ease-in-out ${
-            animating
-              ? 'opacity-0 translate-x-3'
-              : 'opacity-100 translate-x-0'
-          }`}
-        >
-          {isVideo ? (
-            <video
-              ref={videoRef}
-              key={ad.id}
-              src={ad.video}
-              poster={ad.poster}
-              autoPlay
-              muted
-              playsInline
-              onEnded={handleVideoEnded}
-              className="w-full h-auto mx-auto rounded-xl shadow-sm hover:shadow-md transition-shadow"
-            />
-          ) : (
-            <img
-              src={ad.image}
-              alt={ad.alt}
-              className="w-full h-auto mx-auto rounded-xl shadow-sm hover:shadow-md transition-shadow"
-              loading="lazy"
-            />
-          )}
-        </div>
-      </a>
-
-      <div className="text-[11px] text-bark-50/40 dark:text-cream-100/30 mt-1">
-        விளம்பரம் / Sponsored
+    <section
+      className="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
+      {/* Banner Label */}
+      <div className="flex items-center gap-2 mb-3">
+        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/5 border border-white/10">
+          <span className="w-1.5 h-1.5 rounded-full bg-brand-500 animate-pulse" />
+          <span className="text-xs font-medium text-slate-400 tracking-wide uppercase">
+            Sponsored
+          </span>
+        </span>
+        {activeAds.length > 1 && (
+          <span className="text-xs text-slate-500">
+            {currentIndex + 1} / {activeAds.length}
+          </span>
+        )}
       </div>
 
-      {ads.length > 1 && (
-        <div className="flex justify-center gap-1.5 mt-2">
-          {ads.map((_, i) => (
-            <span
-              key={i}
-              className={`h-1.5 rounded-full transition-all duration-300 ${
-                i === index ? 'w-5 bg-saffron-500' : 'w-1.5 bg-saffron-200 dark:bg-bark-50/40'
-              }`}
+      {/* Ad Container */}
+      <div className="relative group rounded-2xl overflow-hidden bg-white/[0.03] border border-white/[0.08]">
+        {/* Ad Image / Link */}
+        <a
+          href={currentAd.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block"
+          aria-label={currentAd.alt}
+        >
+          <div
+            className={`
+              transition-all duration-350 ease-out
+              ${getAnimClass()}
+            `}
+          >
+            <img
+              src={currentAd.image}
+              alt={currentAd.alt}
+              className="w-full h-auto mx-auto rounded-xl shadow-sm hover:shadow-md transition-shadow object-cover"
+              loading="lazy"
+            />
+          </div>
+        </a>
+
+        {/* Overlay Gradient (bottom) */}
+        <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/50 to-transparent pointer-events-none" />
+
+        {/* External Link Indicator */}
+        <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <span className="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-black/60 backdrop-blur-sm border border-white/10 text-xs text-white/80">
+            <ExternalLink size={12} />
+            Visit
+          </span>
+        </div>
+
+        {/* Pause Indicator */}
+        {isPaused && activeAds.length > 1 && (
+          <div className="absolute top-3 left-3">
+            <span className="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-black/60 backdrop-blur-sm border border-white/10 text-xs text-white/60">
+              <span className="w-1.5 h-1.5 rounded-full bg-yellow-400" />
+              Paused
+            </span>
+          </div>
+        )}
+
+        {/* Arrow Buttons — only if multiple ads */}
+        {activeAds.length > 1 && (
+          <>
+            <button
+              onClick={goPrev}
+              className="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-full bg-black/50 backdrop-blur-sm border border-white/10 text-white/70 hover:text-white hover:bg-black/70 hover:border-white/20 opacity-0 group-hover:opacity-100 transition-all duration-300"
+              aria-label="Previous ad"
+            >
+              <ChevronLeft size={18} />
+            </button>
+            <button
+              onClick={goNext}
+              className="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-full bg-black/50 backdrop-blur-sm border border-white/10 text-white/70 hover:text-white hover:bg-black/70 hover:border-white/20 opacity-0 group-hover:opacity-100 transition-all duration-300"
+              aria-label="Next ad"
+            >
+              <ChevronRight size={18} />
+            </button>
+          </>
+        )}
+      </div>
+
+      {/* Dot Indicators */}
+      {activeAds.length > 1 && (
+        <div className="flex items-center justify-center gap-2 mt-4">
+          {activeAds.map((ad, index) => (
+            <button
+              key={ad.id}
+              onClick={() =>
+                goToSlide(index, index > currentIndex ? "next" : "prev")
+              }
+              className={`
+                rounded-full transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0a]
+                ${
+                  index === currentIndex
+                    ? "w-7 h-2 bg-brand-500 shadow-[0_0_8px_rgba(255,107,44,0.5)]"
+                    : "w-2 h-2 bg-white/20 hover:bg-white/40"
+                }
+              `}
+              aria-label={`Go to ad ${index + 1}: ${ad.name}`}
+              aria-current={index === currentIndex ? "true" : undefined}
             />
           ))}
         </div>
       )}
-    </div>
-  )
+
+      {/* Ad Name Tag */}
+      <p className="text-center text-xs text-slate-500 mt-3 truncate">
+        {currentAd.name}
+      </p>
+    </section>
+  );
 }
