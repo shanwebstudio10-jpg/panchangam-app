@@ -1,0 +1,26 @@
+export const CITIES = [
+  { value: 'chennai', label: 'சென்னை', lat: 13.0827, lon: 80.2707 },
+  { value: 'madurai', label: 'மதுரை', lat: 9.9252, lon: 78.1198 },
+  { value: 'coimbatore', label: 'கோயம்புத்தூர்', lat: 11.0168, lon: 76.9558 },
+  { value: 'trichy', label: 'திருச்சி', lat: 10.7905, lon: 78.7047 },
+  { value: 'salem', label: 'சேலம்', lat: 11.6643, lon: 78.1460 },
+  { value: 'tirunelveli', label: 'திருநெல்வேலி', lat: 8.7139, lon: 77.7567 },
+  { value: 'thanjavur', label: 'தஞ்சாவூர்', lat: 10.7870, lon: 79.1378 },
+  { value: 'tiruppur', label: 'திருப்பூர்', lat: 11.1085, lon: 77.3411 },
+  { value: 'vellore', label: 'வேலூர்', lat: 12.9165, lon: 79.1325 },
+  { value: 'erode', label: 'ஈரோடு', lat: 11.3410, lon: 77.7172 },
+  { value: 'thoothukudi', label: 'தூத்துக்குடி', lat: 8.7642, lon: 78.1348 },
+  { value: 'dindigul', label: 'திண்டுக்கல்', lat: 10.3673, lon: 77.9803 },
+  { value: 'karur', label: 'கரூர்', lat: 10.9601, lon: 78.0766 },
+  { value: 'kumbakonam', label: 'கும்பகோணம்', lat: 10.7870, lon: 79.1935 },
+  { value: 'pondicherry', label: 'புதுச்சேரி', lat: 11.9416, lon: 79.8083 },
+  { value: 'bangalore', label: 'பெங்களூர்', lat: 12.9716, lon: 77.5946 },
+  { value: 'mumbai', label: 'மும்பை', lat: 19.0760, lon: 72.8777 },
+  { value: 'delhi', label: 'டெல்லி', lat: 28.7041, lon: 77.1025 },
+  { value: 'kolkata', label: 'கொல்கத்தா', lat: 22.5726, lon: 88.3639 },
+  { value: 'hyderabad', label: 'ஐதராபாத்', lat: 17.3850, lon: 78.4867 },
+  { value: 'kochi', label: 'கொச்சி', lat: 9.9312, lon: 76.2673 },
+  { value: 'trivandrum', label: 'திருவனந்தபுரம்', lat: 8.5241, lon: 76.9366 },
+]
+
+export const DEFAULT_CITY = CITIES[0]

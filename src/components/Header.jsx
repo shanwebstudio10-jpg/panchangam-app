@@ -16,6 +16,9 @@ export default function Header() {
     { to: '/', label: translate('nav.home') },
     { to: '/panchangam', label: translate('nav.panchangam') },
     { to: '/calendar', label: translate('nav.calendar') },
+    { to: '/jathagam', label: translate('nav.jathagam') },
+    { to: '/porutham', label: translate('nav.porutham') },
+    { to: '/daily-rasi-palan', label: translate('nav.rasiPalan') },
     { to: '/festivals', label: translate('nav.festivals') },
     { to: '/about', label: translate('nav.about') },
     { to: '/contact', label: translate('nav.contact') },
@@ -49,14 +52,13 @@ export default function Header() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex items-center justify-between h-16">
             {/* ── Logo ── */}
-            <Link to="/" className="flex items-center gap-3 group">
+            <Link to="/" className="flex items-center gap-3 group shrink-0">
               <div className="relative w-9 h-9 rounded-sm bg-[#D6FF4F] flex items-center justify-center overflow-hidden transition-transform duration-300 group-hover:scale-110">
                 <Flame
                   size={18}
                   strokeWidth={2.5}
                   className="text-zinc-950 relative z-10"
                 />
-                {/* hover glow */}
                 <div className="absolute inset-0 bg-[#D6FF4F] blur-md opacity-0 group-hover:opacity-40 transition-opacity duration-500" />
               </div>
 
@@ -71,7 +73,7 @@ export default function Header() {
             </Link>
 
             {/* ── Desktop Navigation ── */}
-            <nav className="hidden md:flex items-center gap-0.5">
+            <nav className="hidden lg:flex items-center gap-0.5">
               {navLinks.map(({ to, label }) => {
                 const isActive = pathname === to
                 return (
@@ -79,8 +81,8 @@ export default function Header() {
                     key={to}
                     to={to}
                     className={`
-                      relative px-3.5 py-2 rounded-sm text-[11px] font-bold tracking-[0.12em] uppercase
-                      transition-all duration-300
+                      relative px-3 py-2 rounded-sm text-[11px] font-bold tracking-[0.12em] uppercase
+                      transition-all duration-300 whitespace-nowrap
                       ${isActive
                         ? 'bg-[#D6FF4F] text-zinc-950'
                         : 'text-zinc-500 hover:text-zinc-100 hover:bg-zinc-800/60'
@@ -109,7 +111,7 @@ export default function Header() {
               <button
                 onClick={() => setMobileOpen(prev => !prev)}
                 className="
-                  md:hidden relative w-9 h-9 rounded-sm
+                  lg:hidden relative w-9 h-9 rounded-sm
                   flex items-center justify-center
                   text-zinc-400 hover:text-[#D6FF4F]
                   bg-zinc-900/50 border border-zinc-800
@@ -142,9 +144,9 @@ export default function Header() {
         {/* ── Mobile Menu ── */}
         <div
           className={`
-            md:hidden overflow-hidden
+            lg:hidden overflow-hidden
             transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]
-            ${mobileOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}
+            ${mobileOpen ? 'max-h-[700px] opacity-100' : 'max-h-0 opacity-0'}
           `}
         >
           <div className="border-t border-zinc-800/80 bg-zinc-950/95 backdrop-blur-md">
@@ -154,7 +156,7 @@ export default function Header() {
             </div>
 
             {/* Mobile links */}
-            <nav className="px-4 pb-5 space-y-0.5">
+            <nav className="px-4 pb-5 space-y-0.5 max-h-[480px] overflow-y-auto">
               {navLinks.map(({ to, label }, i) => {
                 const isActive = pathname === to
                 return (
@@ -171,9 +173,8 @@ export default function Header() {
                         : 'text-zinc-500 hover:text-zinc-100 hover:bg-zinc-800/50'
                       }
                     `}
-                    style={{ transitionDelay: mobileOpen ? `${i * 40}ms` : '0ms' }}
+                    style={{ transitionDelay: mobileOpen ? `${i * 30}ms` : '0ms' }}
                   >
-                    {/* Active indicator bar */}
                     <span
                       className={`
                         w-0.5 h-4 rounded-full transition-colors duration-300
