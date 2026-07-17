@@ -14,6 +14,11 @@ import RasiPalanPage from './pages/RasiPalan.jsx'
 import ScrollToTop from './components/Scrolltotop'
 import { trackPageView } from './utils/googleAnalytics'
 
+// ⬇️ புதிய imports
+import JathagamPage from './pages/Jathagam.jsx'
+import PoruthamPage from './pages/Porutham.jsx'
+import DailyRasiPalanPage from './pages/DailyRasiPalan.jsx'
+
 export default function App() {
   const location = useLocation()
 
@@ -21,6 +26,7 @@ export default function App() {
   useEffect(() => {
     trackPageView(location.pathname)
   }, [location.pathname])
+
   return (
     <div className="min-h-screen flex flex-col bg-mandala">
       <ScrollToTop />
@@ -38,6 +44,11 @@ export default function App() {
           <Route path="/muhurtham" element={<MuhurthamPage />} />
           <Route path="/rasipalan" element={<RasiPalanPage />} />
           <Route path="/rasi-palan" element={<RasiPalanPage />} />
+
+          {/* ⬇️ புதிய routes */}
+          <Route path="/jathagam" element={<JathagamPage />} />
+          <Route path="/porutham" element={<PoruthamPage />} />
+          <Route path="/daily-rasi-palan" element={<DailyRasiPalanPage />} />
         </Routes>
       </main>
       <Footer />
